@@ -1,0 +1,18 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://raw.githubusercontent.com/iProov/android/master/maven/' }
+        maven { url 'https://repo.combateafraude.com/android/release' }
+    }
+}
+rootProject.name = "testeNewLiveness"
+include ':app'
