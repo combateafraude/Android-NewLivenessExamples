@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 // went through and worked.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("isMatch: " + faceLivenessResult.isAlive);
+                    tvSdkStatus.setText("signedResponse: " + faceLivenessResult.getSignedResponse());
                 });
             }
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 //The sdk has finished error, the message will be return in the result, so you can see what went wrong.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("errorMessage: " + faceLivenessResult.errorMessage );
+                    tvSdkStatus.setText("errorMessage: " + faceLivenessResult.getErrorMessage() );
                 });
             }
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 //The sdk has been closed by the user.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("errorMessage: " + faceLivenessResult.errorMessage );
+                    tvSdkStatus.setText("errorMessage: " + faceLivenessResult.getErrorMessage() );
                 });
             }
 
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 // went through and worked.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("isAlive: " + result.isAlive()  +"\n" + "isMatch: " + result.isMatch());
+                    tvSdkStatus.setText("signedResponse: " + result.getSignedResponse());
                 });
             }
 
