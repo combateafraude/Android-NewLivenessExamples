@@ -3,6 +3,7 @@ package com.caf.testenewliveness;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,6 +18,9 @@ import com.caf.facelivenessiproov.input.CAFStage;
 import com.caf.facelivenessiproov.input.FaceLiveness;
 import com.caf.facelivenessiproov.input.VerifyLivenessListener;
 import com.caf.facelivenessiproov.output.FaceLivenessResult;
+import com.caf.facelivenessiproov.output.failure.NetworkReason;
+import com.caf.facelivenessiproov.output.failure.SDKFailure;
+import com.caf.facelivenessiproov.output.failure.ServerReason;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +73,16 @@ public class MainActivity extends AppCompatActivity {
                 //The sdk has finished error, the message will be return in the result, so you can see what went wrong.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("errorMessage: " + faceLivenessResult.getErrorMessage() );
+                    SDKFailure sdkFailure = faceLivenessResult.getSdkFailure();
+                    if (sdkFailure instanceof NetworkReason){
+                        tvSdkName.setText("NetworkReason: " + faceLivenessResult.getSdkFailure().getMessage());
+                        Log.d("FaceLivenessResult", "onError: " + " Throwable: " + ((NetworkReason) faceLivenessResult.getSdkFailure()).getThrowable());
+                    } else if (sdkFailure instanceof ServerReason){
+                        tvSdkName.setText("ServerReason: " + faceLivenessResult.getSdkFailure().getMessage() );
+                        Log.d("FaceLivenessResult", "onError: " + " Status Code: " + ((ServerReason) faceLivenessResult.getSdkFailure()).getCode());
+                    } else {
+                        tvSdkName.setText("Error: " + faceLivenessResult.getErrorMessage());
+                    }
                 });
             }
 
@@ -127,7 +140,16 @@ public class MainActivity extends AppCompatActivity {
                 //The sdk has finished error, the message will be return in the result, so you can see what went wrong.
                 runOnUiThread(() -> {
                     tvSdkName.setText(sdkName);
-                    tvSdkStatus.setText("errorMessage: " + result.getErrorMessage() );
+                    output.failure.SDKFailure sdkFailure = result.getSdkFailure();
+                    if (sdkFailure instanceof output.failure.NetworkReason){
+                        tvSdkName.setText("NetworkReason: " + result.getSdkFailure().getMessage());
+                        Log.d("FaceAuthenticatorResult", "onError: " + " Throwable: " + ((output.failure.NetworkReason) sdkFailure).getThrowable());
+                    } else if (sdkFailure instanceof output.failure.ServerReason){
+                        tvSdkName.setText("ServerReason: " + result.getSdkFailure().getMessage() );
+                        Log.d("FaceAuthenticatorResult", "onError: " + " Status Code: " + ((output.failure.ServerReason) sdkFailure).getCode());
+                    } else {
+                        tvSdkName.setText("Error: " + result.getErrorMessage());
+                    }
                 });
             }
 
